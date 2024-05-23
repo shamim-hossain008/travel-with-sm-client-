@@ -1,9 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import Root from "../layouts/Root";
+import AddTouristsSpot from "../pages/Add Tourists Spot/AddTouristsSpot";
 import AllTouristsSpot from "../pages/AllTouristsSpot/AllTouristsSpot";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login";
+import MyList from "../pages/MyList";
 import Register from "../pages/Register";
+import PrivetRoute from "./PrivetRoute";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +28,22 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "/addturestssport",
+        element: (
+          <PrivetRoute>
+            <AddTouristsSpot />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/mylist",
+        element: (
+          <PrivetRoute>
+            <MyList />
+          </PrivetRoute>
+        ),
       },
     ],
   },

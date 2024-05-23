@@ -17,7 +17,8 @@ const Register = () => {
     const photo = form.photo.value;
     console.log(email, password, photo);
 
-    // check password
+    // setRegisterError("");
+
     // if (password.length < 6) {
     //   setRegisterError("Password should be at least 6 characters or longer.");
     //   return;
@@ -49,8 +50,8 @@ const Register = () => {
           .then((data) => {
             if (data.insertedId) {
               //TODO: show toast
-              // navigate("/");
               toast.success("User have been created successfully");
+              navigate("/");
             }
           });
       })
