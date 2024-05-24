@@ -1,6 +1,16 @@
+import { useContext } from "react";
+import { FaUser } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Navbar = () => {
+  const { user, signOut } = useContext(AuthContext);
+  console.log("user", user);
+
+  const handleSignOut = () => {
+    logOut().then().catch();
+  };
+
   const navLinks = (
     <>
       <li>
@@ -15,6 +25,16 @@ const Navbar = () => {
       <li>
         <NavLink to="/login">Login</NavLink>
       </li>
+      {user && (
+        <>
+          <li>
+            <NavLink to="/addturestssport">Add Tourists Spot</NavLink>
+          </li>
+          <li>
+            <NavLink to="/mylist">My List</NavLink>
+          </li>
+        </>
+      )}
     </>
   );
   return (
@@ -55,25 +75,29 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{navLinks}</ul>
         </div>
         <div className="navbar-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar"
-          >
-            <div className="w-10 rounded-full">
-              <img alt="Tailwind CSS Navbar component" src="" />
+          {user ? (
+            <div className="flex items-center gap-4">
+              <div
+                className="tooltip h-10 w-10 border flex items-center justify-center rounded-full tooltip-bottom"
+                data-tip={user?.email}
+              >
+                <FaUser size={20} />
+              </div>
+
+              <button
+                onClick={handleSignOut}
+                className="btn w-36 text-xl text-white bg-black font-bold "
+              >
+                Sign Out
+              </button>
             </div>
-          </div>
-
-          <button className="btn w-36 text-xl text-white bg-green-500 font-bold ">
-            Sign Out
-          </button>
-
-          <Link to="/login">
-            <button className="btn w-36 text-xl text-white bg-green-500 font-bold ">
-              Login
-            </button>
-          </Link>
+          ) : (
+            <Link to="/login">
+              <button className="btn w-36 text-xl text-white bg-black font-bold ">
+                Login
+              </button>
+            </Link>
+          )}
         </div>
       </div>
     </div>

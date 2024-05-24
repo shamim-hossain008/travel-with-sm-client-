@@ -1,5 +1,6 @@
 import { getAuth } from "firebase/auth";
 import { useContext, useRef, useState } from "react";
+import { toast } from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
 
@@ -7,7 +8,6 @@ const Login = () => {
   const { logInUser } = useContext(AuthContext);
   const emailRef = useRef(null);
   const navigate = useNavigate();
-  const auth = getAuth();
   const location = useLocation();
   const [registerError, setRegisterError] = useState("");
   const [success, setSuccess] = useState("");
@@ -22,37 +22,26 @@ const Login = () => {
     setRegisterError("");
     setSuccess("");
 
-    
-
-
-    logInUser(email, password).then((result) => {
-      console.log(result.user);
-      const user = {
-        email,
-        lastLoggedAt: result.user?.metadata?.lastSignInTime,
-      };
-      fetch("http://localhost:5010/users", {
-        method: "PATCH",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(user),
+    logInUser(email, password)
+      .then((result) => {
+        console.log(result.user);
+        if (result.user.emailVerified) {
+          setSuccess("User logged in successfully");
+          navigate(location.state?.from || "/", { replace: true });
+        } else {
+          toast.error("Please verify your email address.");
+        }
       })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          navigate(location?.state ? location.state : "/");
-        })
-        .catch((error) => {
-          console.error("Login error:", error.message);
-        });
-    });
+      .catch((error) => {
+        console.error(error);
+        setRegisterError(error.message);
+      });
   };
 
   const handleForgetPassword = () => {
     const email = emailRef.current?.value;
-    if (!email || password) {
-      console.log("Please Provide email...!!", emailRef.current.value);
+    if (!email) {
+      console.log("Please Provide email...!!");
       return;
     } else if (
       !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)
@@ -60,6 +49,17 @@ const Login = () => {
       console.log("Please Provide a valid email");
       return;
     }
+
+    const auth = getAuth();
+    auth
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        toast.success("Password reset email sent.");
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error("Error sending password reset email.");
+      });
   };
 
   return (
@@ -77,6 +77,7 @@ const Login = () => {
               type="email"
               placeholder="email"
               name="email"
+              ref={emailRef}
               className="input input-bordered"
               required
             />
@@ -110,7 +111,7 @@ const Login = () => {
         {registerError && <p className="text-red-700">{registerError}</p>}
         {success && <p className="text-green-600 font-bold">{success}</p>}
         <p className="text-center mt-4">
-          Don't Have An Account?{"  "}
+          Don't Have An Account?{" "}
           <Link className="text-red-500" to="/register">
             Register
           </Link>
