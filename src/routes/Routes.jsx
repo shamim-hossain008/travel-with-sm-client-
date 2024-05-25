@@ -6,6 +6,8 @@ import Home from "../pages/Home/Home";
 import Login from "../pages/Login";
 import MyList from "../pages/MyList";
 import Register from "../pages/Register";
+
+import Profile from "../pages/Shared/Profile";
 import PrivetRoute from "./PrivetRoute";
 
 const router = createBrowserRouter([
@@ -29,6 +31,7 @@ const router = createBrowserRouter([
         path: "/register",
         element: <Register />,
       },
+
       {
         path: "/addturestssport",
         element: (
@@ -42,6 +45,14 @@ const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <MyList />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/profile",
+        element: (
+          <PrivetRoute>
+            <Profile />
           </PrivetRoute>
         ),
       },

@@ -25,7 +25,7 @@ const Login = () => {
     logInUser(email, password)
       .then((result) => {
         console.log(result.user);
-        if (result.user.emailVerified) {
+        if (result.user) {
           setSuccess("User logged in successfully");
           navigate(location.state?.from || "/", { replace: true });
         } else {
@@ -41,7 +41,7 @@ const Login = () => {
   const handleForgetPassword = () => {
     const email = emailRef.current?.value;
     if (!email) {
-      console.log("Please Provide email...!!");
+      toast.error("Please Provide email...!!");
       return;
     } else if (
       !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)
@@ -52,7 +52,7 @@ const Login = () => {
 
     const auth = getAuth();
     auth
-      .sendPasswordResetEmail(email)
+      .sendPasswordResetEmail(auth, email)
       .then(() => {
         toast.success("Password reset email sent.");
       })

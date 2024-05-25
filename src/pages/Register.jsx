@@ -59,7 +59,7 @@ const Register = () => {
           .then((data) => {
             if (data.insertedId) {
               toast.success("User has been created successfully");
-              navigate("/");
+              navigate("/profile");
             }
           });
       })

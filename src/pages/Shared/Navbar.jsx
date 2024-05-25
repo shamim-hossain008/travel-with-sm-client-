@@ -1,14 +1,19 @@
 import { useContext } from "react";
 import { FaUser } from "react-icons/fa";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Navbar = () => {
   const { user, signOut } = useContext(AuthContext);
   console.log("user", user);
+  const navigate = useNavigate();
 
   const handleSignOut = () => {
-    logOut().then().catch();
+    signOut()
+      .then(() => {
+        navigate("/login");
+      })
+      .catch();
   };
 
   const navLinks = (
@@ -27,6 +32,9 @@ const Navbar = () => {
       </li>
       {user && (
         <>
+          <li>
+            <NavLink to="/profile">Profile</NavLink>
+          </li>
           <li>
             <NavLink to="/addturestssport">Add Tourists Spot</NavLink>
           </li>

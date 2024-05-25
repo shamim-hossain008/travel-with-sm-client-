@@ -3,10 +3,8 @@ import { Navigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
 
 const PrivetRoute = ({ children }) => {
-  const { user, loading } = useContext(AuthContext);
-  if (loading) {
-    return <span className="loading loading-spinner loading-lg"></span>;
-  }
+  const { user } = useContext(AuthContext);
+
   if (user) {
     return children;
   }
