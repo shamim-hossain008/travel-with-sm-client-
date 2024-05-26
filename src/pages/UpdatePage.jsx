@@ -1,11 +1,8 @@
-import { toast } from "react-hot-toast";
-
-const AddTouristsSpot = () => {
-  const handleAdd = (e) => {
+const UpdatePage = () => {
+  const handleUpdate = (e) => {
     e.preventDefault();
     const form = e.target;
-    const name = form.name.value;
-    const email = form.email.value;
+
     const spot = form.spot.value;
     const country = form.country.value;
     const location = form.location.value;
@@ -16,9 +13,7 @@ const AddTouristsSpot = () => {
     const visitors = form.visitors.value;
     const photo = form.photo.value;
 
-    const newAdd = {
-      name,
-      email,
+    const newUpdate = {
       spot,
       country,
       location,
@@ -29,24 +24,7 @@ const AddTouristsSpot = () => {
       visitors,
       photo,
     };
-    console.log(newAdd);
-
-    fetch("http://localhost:5010/addList", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(newAdd),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        if (data.insertedId) {
-          toast.success("Added Successfully");
-        } else {
-          toast.error("error");
-        }
-      });
+    console.log(newUpdate);
   };
 
   return (
@@ -63,34 +41,9 @@ const AddTouristsSpot = () => {
               beaches of the Maldives to the historic streets of Rome, here are
               some of the most popular tourist destinations worldwide.
             </p>
-            <form onSubmit={handleAdd}>
+            <form onSubmit={handleUpdate}>
               {/* form row 1 */}
-              <div className="md:flex gap-2 ">
-                <div className="form-control md:w-1/2">
-                  <label className="label">
-                    <span className="label-text">User Name</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="User Name"
-                    className="input input-bordered w-full"
-                    required
-                  />
-                </div>
-                <div className="form-control md:w-1/2">
-                  <label className="label">
-                    <span className="label-text"> User Email</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="email"
-                    placeholder="User Email"
-                    className="input input-bordered w-full"
-                    required
-                  />
-                </div>
-              </div>
+
               {/* form  row 2*/}
               <div className="md:flex gap-2 ">
                 <div className="form-control md:w-1/2">
@@ -214,7 +167,7 @@ const AddTouristsSpot = () => {
                 </div>
               </div>
               <div className="form-control mt-6">
-                <button className="btn btn-primary">Add</button>
+                <button className="btn btn-primary">Update</button>
               </div>
             </form>
           </div>
@@ -224,4 +177,4 @@ const AddTouristsSpot = () => {
   );
 };
 
-export default AddTouristsSpot;
+export default UpdatePage;

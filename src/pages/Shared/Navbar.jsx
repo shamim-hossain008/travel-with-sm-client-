@@ -1,19 +1,24 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import { toast } from "react-hot-toast";
 import { FaUser } from "react-icons/fa";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Navbar = () => {
-  const { user, signOut } = useContext(AuthContext);
+  const { user, signOut } = useContext(AuthContext) || {};
   console.log("user", user);
   const navigate = useNavigate();
+  const [userOpen, setUserOpen] = useState(false);
 
   const handleSignOut = () => {
     signOut()
-      .then(() => {
-        navigate("/login");
+      .then((result) => {
+        toast.success("successfully Sign out");
       })
-      .catch();
+      .catch((error) => {
+        toast.error("error");
+      });
+    setUserOpen(false);
   };
 
   const navLinks = (

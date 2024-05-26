@@ -7,7 +7,9 @@ import Login from "../pages/Login";
 import MyList from "../pages/MyList";
 import Register from "../pages/Register";
 
+import ViewDetails from "../components/ViewDetails";
 import Profile from "../pages/Shared/Profile";
+import UpdatePage from "../pages/UpdatePage";
 import PrivetRoute from "./PrivetRoute";
 
 const router = createBrowserRouter([
@@ -53,6 +55,23 @@ const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <Profile />
+          </PrivetRoute>
+        ),
+      },
+
+      {
+        path: "/viewDetails",
+        element: (
+          <PrivetRoute>
+            <ViewDetails />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/updatePage",
+        element: (
+          <PrivetRoute>
+            <UpdatePage></UpdatePage>
           </PrivetRoute>
         ),
       },

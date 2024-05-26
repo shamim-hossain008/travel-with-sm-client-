@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
 
 const Login = () => {
-  const { logInUser } = useContext(AuthContext);
+  const { logInUser, setUser } = useContext(AuthContext);
   const emailRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -26,6 +26,7 @@ const Login = () => {
       .then((result) => {
         console.log(result.user);
         if (result.user) {
+          setUser(result.user);
           setSuccess("User logged in successfully");
           navigate(location.state?.from || "/", { replace: true });
         } else {
