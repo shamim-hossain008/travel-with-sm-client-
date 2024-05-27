@@ -5,6 +5,7 @@ const AddTouristsSpot = () => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
+    // try to user email....check
     const email = form.email.value;
     const spot = form.spot.value;
     const country = form.country.value;

@@ -9,6 +9,7 @@ import Register from "../pages/Register";
 
 import ViewDetails from "../components/ViewDetails";
 import Profile from "../pages/Shared/Profile";
+import TouristsSpotsSection from "../pages/TouristsSpotsSection";
 import UpdatePage from "../pages/UpdatePage";
 import PrivetRoute from "./PrivetRoute";
 
@@ -71,9 +72,13 @@ const router = createBrowserRouter([
         path: "/updatePage",
         element: (
           <PrivetRoute>
-            <UpdatePage></UpdatePage>
+            <UpdatePage></UpdatePage>,
           </PrivetRoute>
         ),
+      },
+      {
+        path: "/touristsSpotsSection",
+        element: <TouristsSpotsSection />,
       },
     ],
   },
