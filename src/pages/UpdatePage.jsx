@@ -33,7 +33,7 @@ const UpdatePage = () => {
         <div className="card-body  items-center">
           <div className="shrink-0 bg-red-50 p-24 rounded-xl  shadow-2xl ">
             <h3 className="text-3xl text-extrabold text-pretty pb-3">
-              Add Tourists Spot
+              Update Tourists Spot
             </h3>
             <p>
               Traveling is a passion for many, offering a chance to explore new

@@ -1,24 +1,30 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../providers/AuthProvider";
+import { useEffect, useState } from "react";
 
 const MyList = () => {
-  const { user } = useContext(AuthContext) || {};
+  const user = localStorage.getItem("user");
   const [spots, setSpots] = useState([]);
 
-  // get form database
+  const parsedUser = JSON.parse(user);
 
+  console.log(parsedUser.email);
+
+  // get form database
   useEffect(() => {
-    fetch(`http://localhost:5010/myListSpot/${user?.email}`)
+    fetch(`http://localhost:5010/myListSpot/${parsedUser.email}`)
       .then((res) => res.json())
       .then((data) => {
         setSpots(data);
       });
   }, [user]);
 
+  console.log(spots);
+
   return (
-    <div>
-      <h2>My Tourist Spots</h2>
-      <table>
+    <div className="overflow-x-auto">
+      <h className=" flex justify-center  text-bold text-3xl py-4">
+        My Tourist Spots
+      </h>
+      <table className="table table-zebra">
         <thead>
           <tr>
             <th>Name</th>
@@ -28,17 +34,24 @@ const MyList = () => {
           </tr>
         </thead>
         <tbody>
-          {spots?.map((spot) => (
+          {spots.map((spot) => (
             <tr key={spot._id}>
               <td>{spot.name}</td>
               <td>{spot.location}</td>
               <td>{spot.description}</td>
               <td>
-                <link to="/updatePage">
-                  <button>Update</button>
-                </link>
-
-                <button>Delete</button>
+                <button
+                  className="btn btn-success text-bold m-1"
+                  onClick={() => handleUpdate(spot._id)}
+                >
+                  Update
+                </button>
+                <button
+                  className="btn btn-error text-bold "
+                  onClick={() => handleDelete(spot._id)}
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}

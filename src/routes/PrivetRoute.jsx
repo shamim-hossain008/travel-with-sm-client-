@@ -1,9 +1,7 @@
-import { useContext } from "react";
 import { Navigate } from "react-router-dom";
-import { AuthContext } from "../providers/AuthProvider";
 
 const PrivetRoute = ({ children }) => {
-  const { user } = useContext(AuthContext);
+  const user = localStorage.getItem("user");
 
   if (user) {
     return children;

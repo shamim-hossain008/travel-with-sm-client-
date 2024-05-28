@@ -5,8 +5,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Navbar = () => {
-  const { user, signOut } = useContext(AuthContext) || {};
-  console.log("user", user);
+  const { signOut } = useContext(AuthContext) || {};
   const navigate = useNavigate();
   const [userOpen, setUserOpen] = useState(false);
 
@@ -20,6 +19,8 @@ const Navbar = () => {
       });
     setUserOpen(false);
   };
+
+  const user = localStorage.getItem("user");
 
   const navLinks = (
     <>

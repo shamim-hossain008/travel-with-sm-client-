@@ -29,6 +29,7 @@ const Login = () => {
           setUser(result.user);
           setSuccess("User logged in successfully");
           navigate(location.state?.from || "/", { replace: true });
+          localStorage.setItem("user", JSON.stringify(result.user));
         } else {
           toast.error("Please verify your email address.");
         }
