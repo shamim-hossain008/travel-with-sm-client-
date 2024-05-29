@@ -1,26 +1,46 @@
 import { useContext, useState } from "react";
-import { toast } from "react-hot-toast";
 import { FaUser } from "react-icons/fa";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Navbar = () => {
-  const { signOut } = useContext(AuthContext) || {};
+  const { signOutUser } = useContext(AuthContext) || {};
   const navigate = useNavigate();
   const [userOpen, setUserOpen] = useState(false);
+  const location = useLocation();
 
+  // const handleSignOut = () => {
+  //   signOutUser()
+  //     .then(() => {
+  //       toast.success("Successfully Sign out");
+  //       navigate(location.state?.from || "/", { replace: true });
+  //     })
+  //     .catch((error) => {
+  //       toast.error("error");
+  //     });
+  //   setUserOpen(true);
+  // };
   const handleSignOut = () => {
-    signOut()
-      .then((result) => {
-        toast.success("successfully Sign out");
-      })
-      .catch((error) => {
-        toast.error("error");
-      });
-    setUserOpen(false);
+    localStorage.removeItem("user");
+    navigate("/");
+    // if (signOutUser) {
+    //   signOut()
+    //     .then(() => {
+    //       toast.success("Successfully signed out");
+    //       navigate("/login");
+    //     })
+    //     .catch((error) => {
+    //       // Remove user data from localStorage
+    //       localStorage.removeItem("user");
+    //       toast.error("Error signing out");
+    //     });
+    //   setUserOpen(false);
+    // } else {
+    //   toast.error("Sign out function is not available");
+    // }
   };
 
-  const user = localStorage.getItem("user");
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const navLinks = (
     <>
@@ -95,6 +115,7 @@ const Navbar = () => {
                 className="tooltip h-10 w-10 border flex items-center justify-center rounded-full tooltip-bottom"
                 data-tip={user?.email}
               >
+                {/* <img src={} alt={user.name} className="h-10 w-10 rounded-full object-cover"/> */}
                 <FaUser size={20} />
               </div>
 
