@@ -1,6 +1,8 @@
 import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const AddTouristsSpot = () => {
+  const navigate = useNavigate();
   const handleAdd = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -44,6 +46,7 @@ const AddTouristsSpot = () => {
         console.log(data);
         if (data.insertedId) {
           toast.success("Added Successfully");
+          navigate("/");
         } else {
           toast.error("error");
         }

@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 
 const MyList = () => {
   const user = localStorage.getItem("user");
   const [spots, setSpots] = useState([]);
-
+  const [refresh, setRefresh] = useState(false);
   const parsedUser = JSON.parse(user);
+  const navigate = useNavigate();
 
   console.log(parsedUser.email);
 
@@ -17,6 +19,24 @@ const MyList = () => {
         setSpots(data);
       });
   }, [user]);
+
+  // delete specific spot by id
+  const handleDelete = (id) => {
+    fetch(`${import.meta.env.VITE_BASE_URL}/spots/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          toast.success(data.message);
+          setRefresh(!refresh);
+          navigate("/");
+        } else {
+          toast.error(data.error);
+        }
+      })
+      .catch((error) => toast.error(error.message));
+  };
 
   return (
     <div className="overflow-x-auto">
@@ -47,7 +67,7 @@ const MyList = () => {
 
                 <button
                   className="btn btn-error text-bold "
-                  // onClick={() => handleDelete(spot._id)}
+                  onClick={() => handleDelete(spot._id)}
                 >
                   Delete
                 </button>
