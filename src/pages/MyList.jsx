@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const MyList = () => {
   const user = localStorage.getItem("user");
@@ -17,13 +18,11 @@ const MyList = () => {
       });
   }, [user]);
 
-  console.log(spots);
-
   return (
     <div className="overflow-x-auto">
-      <h className=" flex justify-center  text-bold text-3xl py-4">
+      <h1 className=" flex justify-center  text-bold text-3xl py-4">
         My Tourist Spots
-      </h>
+      </h1>
       <table className="table table-zebra">
         <thead>
           <tr>
@@ -40,15 +39,15 @@ const MyList = () => {
               <td>{spot.location}</td>
               <td>{spot.description}</td>
               <td>
-                <button
-                  className="btn btn-success text-bold m-1"
-                  onClick={() => handleUpdate(spot._id)}
-                >
-                  Update
-                </button>
+                <Link to={`/updatePage/${spot._id}`}>
+                  <button className="btn btn-success text-bold m-1">
+                    Update
+                  </button>
+                </Link>
+
                 <button
                   className="btn btn-error text-bold "
-                  onClick={() => handleDelete(spot._id)}
+                  // onClick={() => handleDelete(spot._id)}
                 >
                   Delete
                 </button>

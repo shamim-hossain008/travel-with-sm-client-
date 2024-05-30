@@ -1,4 +1,37 @@
+import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { useNavigate, useParams } from "react-router-dom";
+
 const UpdatePage = () => {
+  const router = useParams();
+  const { id } = router;
+  const navigate = useNavigate();
+
+  console.log(id, "router id");
+  const [spot, setSpot] = useState({});
+  const [refresh, setRefresh] = useState(false);
+
+  const {
+    spot: name,
+    country,
+    location,
+    description,
+    cost,
+    seasonality,
+    time,
+    visitors,
+    photo,
+  } = spot;
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_BASE_URL}/get-single-spot/${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setSpot(data);
+      })
+      .catch((error) => toast.error(error.message));
+  }, [refresh, id]);
+
   const handleUpdate = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -24,7 +57,29 @@ const UpdatePage = () => {
       visitors,
       photo,
     };
-    console.log(newUpdate);
+    // console.log(newUpdate);
+
+    fetch(`${import.meta.env.VITE_BASE_URL}/updateSpots/${id}`, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newUpdate),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.success) {
+          toast.success(data.message);
+          navigate("/");
+        } else {
+          toast.error(data.error);
+        }
+      })
+      .catch((error) => {
+        console.error("Error updating spot:", error);
+        toast.error("Failed to update");
+      });
   };
 
   return (
@@ -42,8 +97,6 @@ const UpdatePage = () => {
               some of the most popular tourist destinations worldwide.
             </p>
             <form onSubmit={handleUpdate}>
-              {/* form row 1 */}
-
               {/* form  row 2*/}
               <div className="md:flex gap-2 ">
                 <div className="form-control md:w-1/2">
@@ -53,6 +106,7 @@ const UpdatePage = () => {
                   <input
                     type="text"
                     name="spot"
+                    defaultValue={name}
                     placeholder="Tourists Spot Name"
                     className="input input-bordered w-full"
                     required
@@ -64,6 +118,7 @@ const UpdatePage = () => {
                   </label>
                   <input
                     type="text"
+                    defaultValue={country}
                     name="country"
                     placeholder="Country Name"
                     className="input input-bordered w-full"
@@ -80,6 +135,7 @@ const UpdatePage = () => {
                   <input
                     type="text"
                     name="location"
+                    defaultValue={location}
                     placeholder="Location"
                     className="input input-bordered w-full"
                     required
@@ -92,6 +148,7 @@ const UpdatePage = () => {
                   <input
                     type="text"
                     name="description"
+                    defaultValue={description}
                     placeholder="Short Description"
                     className="input input-bordered w-full"
                     required
@@ -106,6 +163,7 @@ const UpdatePage = () => {
                   <input
                     type="text"
                     name="cost"
+                    defaultValue={cost}
                     placeholder="Average_Cost"
                     className="input input-bordered w-full"
                     required
@@ -118,6 +176,7 @@ const UpdatePage = () => {
                   <input
                     type="text"
                     name="seasonality"
+                    defaultValue={seasonality}
                     placeholder="like Summer, Winter"
                     className="input input-bordered w-full"
                     required
@@ -133,6 +192,7 @@ const UpdatePage = () => {
                     type="text"
                     name="time"
                     placeholder="Travel Time"
+                    defaultValue={time}
                     className="input input-bordered w-full"
                     required
                   />
@@ -144,6 +204,7 @@ const UpdatePage = () => {
                   <input
                     type="text"
                     name="visitors"
+                    defaultValue={visitors}
                     placeholder="Total Visitors PerYear"
                     className="input input-bordered w-full"
                     required
@@ -160,6 +221,7 @@ const UpdatePage = () => {
                   <input
                     type="text"
                     name="photo"
+                    defaultValue={photo}
                     placeholder="Photo URL"
                     className="input input-bordered w-full"
                     required

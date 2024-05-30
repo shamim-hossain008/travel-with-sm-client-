@@ -69,12 +69,16 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/updatePage",
+        path: "/updatePage/:id",
         element: (
           <PrivetRoute>
-            <UpdatePage></UpdatePage>,
+            <UpdatePage />
           </PrivetRoute>
         ),
+        // loader: ({ params }) =>
+        //   fetch(
+        //     `${import.meta.env.VITE_BASE_URL}/get-single-spot/${params.id}`
+        //   ),
       },
       {
         path: "/touristsSpotsSection",
