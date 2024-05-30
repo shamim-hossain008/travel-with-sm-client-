@@ -32,7 +32,7 @@ const TouristsSpotsSection = () => {
               <p> Location : {item.location}</p>
               <div className="card-actions justify-end">
                 <div className="card-actions justify-end">
-                  <Link to="/viewDetails">
+                  <Link to={`/viewDetails/${item._id}`}>
                     <button className="btn btn-primary">View Details</button>
                   </Link>
                 </div>
