@@ -24,7 +24,7 @@ const TouristsSpotsSection = () => {
         {spots.slice(0, 6).map((item) => (
           <div key={item._id} className="card w-96 glass">
             <figure>
-              <img src={item.photo} alt="" />
+              <img className="h-72" src={item.photo} alt="" />
             </figure>
             <div className="card-body">
               <h2 className="card-title">Tourists_Spot_Name: {item.spot}</h2>

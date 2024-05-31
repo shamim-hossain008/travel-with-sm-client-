@@ -20,11 +20,11 @@ const AllTouristsSpot = () => {
           All-Tourists-Spot
         </h2>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-20">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4  my-20">
         {spots.map((item) => (
-          <div key={item._id} className="card w-96 glass">
+          <div key={item._id} className="card md:w-96 glass">
             <figure>
-              <img src={item.photo} alt="" />
+              <img className="h-72" src={item.photo} alt="" />
             </figure>
             <div className="card-body">
               <h2 className="card-title">Tourists_Spot_Name: {item.spot}</h2>
