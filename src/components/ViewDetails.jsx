@@ -24,7 +24,6 @@ const ViewDetails = () => {
       .then((res) => res.json())
       .then((data) => {
         setSpot(data);
-        
       })
       .catch((error) => toast.error(error.message));
   }, [id]);

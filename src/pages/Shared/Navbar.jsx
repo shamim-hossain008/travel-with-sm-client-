@@ -9,35 +9,11 @@ const Navbar = () => {
   const [userOpen, setUserOpen] = useState(false);
   const location = useLocation();
 
-  // const handleSignOut = () => {
-  //   signOutUser()
-  //     .then(() => {
-  //       toast.success("Successfully Sign out");
-  //       navigate(location.state?.from || "/", { replace: true });
-  //     })
-  //     .catch((error) => {
-  //       toast.error("error");
-  //     });
-  //   setUserOpen(true);
-  // };
+  
   const handleSignOut = () => {
     localStorage.removeItem("user");
     navigate("/");
-    // if (signOutUser) {
-    //   signOut()
-    //     .then(() => {
-    //       toast.success("Successfully signed out");
-    //       navigate("/login");
-    //     })
-    //     .catch((error) => {
-    //       // Remove user data from localStorage
-    //       localStorage.removeItem("user");
-    //       toast.error("Error signing out");
-    //     });
-    //   setUserOpen(false);
-    // } else {
-    //   toast.error("Sign out function is not available");
-    // }
+    
   };
 
   const user = JSON.parse(localStorage.getItem("user"));

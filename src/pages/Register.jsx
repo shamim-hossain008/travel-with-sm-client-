@@ -48,7 +48,7 @@ const Register = () => {
         const createdAt = result.user?.metadata?.creationTime;
         const user = { email, createdAt };
 
-        fetch("http://localhost:5010/user", {
+        fetch(`${import.meta.env.VITE_BASE_URL}/user`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

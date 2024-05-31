@@ -13,7 +13,7 @@ const MyList = () => {
 
   // get form database
   useEffect(() => {
-    fetch(`http://localhost:5010/myListSpot/${parsedUser.email}`)
+    fetch(`${import.meta.env.VITE_BASE_URL}/myListSpot/${parsedUser.email}`)
       .then((res) => res.json())
       .then((data) => {
         setSpots(data);

@@ -34,7 +34,7 @@ const AddTouristsSpot = () => {
     };
     console.log(newAdd);
 
-    fetch("http://localhost:5010/addList", {
+    fetch(`${import.meta.env.VITE_BASE_URL}`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
